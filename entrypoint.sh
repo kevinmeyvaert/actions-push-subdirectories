@@ -33,13 +33,6 @@ for folder in $FOLDER/*; do
   find . | grep -v ".git" | grep -v "^\.*$" | xargs rm -rf # delete all files (to handle deletions in monorepo)
   cp -r $BASE/$folder/. .
 
-  # generate a new yarn.lock file based on package-lock.json unless you're in a workspace
-  if [ "$IS_WORKSPACE" = null ]; then
-    echo "  Regenerating yarn.lock"
-    rm -rf yarn.lock
-    yarn
-  fi
-
   # Commit if there is anything to
   if [ -n "$(git status --porcelain)" ]; then
     echo  "  Committing $NAME to $GITHUB_REPOSITORY"
